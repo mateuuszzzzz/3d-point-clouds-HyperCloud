@@ -1,5 +1,5 @@
 {
-    "results_root": "/3d_point_cloud/results",
+    "results_root": "/home/mateusz/Desktop/debug_submodule",
     "arch": "vae",
     "clean_results_dir": false,
 

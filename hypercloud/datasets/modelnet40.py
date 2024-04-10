@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 from torch.utils.data import Dataset
 
-from utils.pcutil import rand_rotation_matrix
+from ..utils.pcutil import rand_rotation_matrix
 
 all_classes = ['airplane', 'bathtub', 'bed', 'bench', 'bookshelf', 'bottle',
                'bowl', 'car', 'chair', 'cone', 'cup', 'curtain', 'desk', 'door',

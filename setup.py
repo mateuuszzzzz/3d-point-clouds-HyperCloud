@@ -21,16 +21,16 @@ setup(
         'hypercloud.losses': 'hypercloud/losses',
         'hypercloud.datasets': 'hypercloud/datasets',
     },
-    install_requires={
-        'pyinn' @ 'git+https://github.com/mateuuszzzzz/pyinn/tree/cupy-fix@cupy-fix',
+    install_requires=[
+        'pyinn @ git+https://github.com/mateuuszzzzz/pyinn@cupy-fix',
         'plyfile==0.8.1',
         'scikit-learn==0.22.1',
         'scipy==1.7.3',
         'torch==1.12.1',
         'pandas==0.25.3',
-        'numpy==1.21.16',
-        'matplotlib==3.1.12',
+        'numpy==1.21.6',
+        'matplotlib==3.1.2',
         'h5py==2.10.0',
-    },
+    ],
     description='Auxiliary package to make HyperCloud code accessible from Gaussian Mesh Splatting (GaMeS).',
 )

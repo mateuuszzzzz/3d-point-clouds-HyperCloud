@@ -164,8 +164,7 @@ def subdivide(faces, depth, method):
     for tri in faces:
         yield from method(tri, depth)
 
-
-def generate(_method, _depth):
+def _generate(_method, _depth):
     method = {
         "hybrid":   subdivide_hybrid,
         "hybrid2":  subdivide_hybrid2,
@@ -207,7 +206,20 @@ def generate(_method, _depth):
     X = np.array(X)
     Y = np.array(Y)
     Z = np.array(Z)
+    return X, Y, Z, T
+
+def generate(_method, _depth):
+    X, Y, Z, T = _generate(_method, _depth)
     T = mtri.Triangulation(X, Y, np.array(T))
     points = np.concatenate((X.reshape(-1, 1), Y.reshape(-1, 1), Z.reshape(-1, 1)), axis=1)
 
     return torch.from_numpy(points).float(), T
+
+def generate_sphere_mesh(_method, _depth):
+    X, Y, Z, faces = _generate(_method, _depth)
+
+    vertices = torch.from_numpy(
+        np.concatenate((X.reshape(-1, 1), Y.reshape(-1, 1), Z.reshape(-1, 1)), axis=1)
+    ).float()
+    return vertices, faces
+

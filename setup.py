@@ -27,7 +27,7 @@ setup(
         'scikit-learn==0.22.1',
         'scipy==1.7.3',
         'torch==1.12.1',
-        'pandas==0.25.3',
+        'pandas==1.2.3',
         'numpy==1.21.6',
         'matplotlib==3.1.2',
         'h5py==2.10.0',

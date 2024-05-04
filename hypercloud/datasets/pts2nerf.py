@@ -35,7 +35,7 @@ synth_id_to_number = {k: i for i, k in enumerate(synth_id_to_category.keys())}
 
 class Pts2Nerf(Dataset):
     def __init__(self, root_dir='/home/datasets/nerfdataset', shapenet_root_dir='/shared/sets/datasets/3D_points/ShapeNetCore.v2', classes=[],
-                 transform=None, train=True):
+                 transform=None, train=True, debug=False, debug_size=1, images_per_cloud = 4):
         """
         Args:
             root_dir (string): Directory of structure: 
@@ -61,6 +61,9 @@ class Pts2Nerf(Dataset):
         self.train = train
     
         self.data = []
+        self.debug = debug
+        self.debug_size = debug_size
+        self.images_per_cloud = images_per_cloud
 
         self._load()
 
@@ -78,8 +81,8 @@ class Pts2Nerf(Dataset):
             data_files = self.test_data
 
         point_cloud = np.load(data_files['sample_filename'][idx])['data'][:, :3] # without RGB
-        images = np.load(data_files['sample_filename'][idx])['images']
-        cam_poses = np.load(data_files['sample_filename'][idx])['cam_poses']
+        images = np.load(data_files['sample_filename'][idx])['images'][:self.images_per_cloud,:,:]
+        cam_poses = np.load(data_files['sample_filename'][idx])['cam_poses'][:self.images_per_cloud,:,:]
 
         return point_cloud, images, cam_poses
 
@@ -116,6 +119,12 @@ class Pts2Nerf(Dataset):
 
             self.train_data = self.train_data.reset_index(drop=True)
             self.test_data = self.test_data.reset_index(drop=True)
+
+            # TEMPORARILY FOR DEBUG PURPOSES WE USE ONLY A SUBSET
+            if self.debug:
+                self.train_data = self.train_data.head(self.debug_size)
+                self.test_data = self.test_data.head(self.debug_size)
+                print("WARNING: This is only a part of the dataset! Mainly for debug purposes")
 
         print("Loaded train data:", len(self.train_data), "samples")
         print("Loaded test data:", len(self.test_data), "samples")
